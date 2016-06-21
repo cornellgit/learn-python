@@ -1,4 +1,5 @@
 from basics.pkg.fibo import fib_seq
+# Python module can be as a singleton.
 
 # 1. absolute path
 # import fibo as fi
