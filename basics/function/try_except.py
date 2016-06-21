@@ -15,7 +15,7 @@ divide(1, 2)
 divide(2, 0)
 
 
-# 2. customized exception
+# 2. user-defined exception
 # exception is a class. It is a child of the class Exception
 class MyException(Exception):
     pass
