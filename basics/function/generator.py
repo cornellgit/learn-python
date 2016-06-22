@@ -13,3 +13,7 @@ print(type(custom_range_generator))
 
 for n in custom_range_generator:
     print(n)
+
+# generator type
+generator = (number for number in range(1, 6))
+print(type(generator))
