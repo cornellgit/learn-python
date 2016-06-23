@@ -16,8 +16,10 @@ def send(conn):
     conn.close()
 
 
-def transform(func, conn):
+def transform(func, pipe):
     """receive input from pipe, transform it"""
+    conn = pipe[1]
+    pipe[0].close()
     try:
         while True:
             # Blocks until there its something to receive.
@@ -26,27 +28,17 @@ def transform(func, conn):
             print('transform:', func(i))
     except EOFError:
         conn.close()
+        # to get EOF I need to make sure c_1 is closed in all processes including main
 
 
-c_1, c_2 = mp.Pipe()
-p1 = mp.Process(target=send, args=(c_1,))
-p2 = mp.Process(target=transform, args=(lambda x: x ** 2, c_2,))
+pipe = (c_1, c_2) = mp.Pipe()
 
-p1.start()
-p2.start()
-p1.join()
-p2.join()
+p_list = [mp.Process(target=send, args=(c_1,)),
+          mp.Process(target=transform, args=(lambda x: x ** 2, pipe))]
 
+for proc in p_list:
+    proc.start()
 
-#
-#
-# def f(conn):
-#     conn.send([42, None, 'hello'])
-#     conn.close()
-#
-# if __name__ == '__main__':
-#     c1, c2 = mp.Pipe()
-#     p = mp.Process(target=f, args=(c1,))
-#     p.start()
-#     print (c2.recv())   # prints "[42, None, 'hello']"
-#     p.join()
+c_1.close()
+for proc in p_list:
+    proc.join()
