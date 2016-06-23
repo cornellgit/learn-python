@@ -3,6 +3,8 @@
 # 2. it allows access  this variable>0
 # semaphore event purpose is to synchronize the computation of two or more threads
 # TODO in which patterns are Semaphore useful?
+# A particular use of semaphores is the mutex.
+# A mutex is nothing but a semaphore with an internal variable initialized to the value 1
 
 import random
 import threading
