@@ -1,11 +1,12 @@
 # semaphore is constituted of an internal variable that identifies the number of concurrent access to a resource
 # 1. acquire() decreases the variable, release() increment
-# 2. it allows access  this variable>=0
+# 2. it allows access  this variable>0
+# semaphore event purpose is to synchronize the computation of two or more threads
 # TODO in which patterns are Semaphore useful?
 
 import random
 import threading
-import time
+
 from os import getpid as pid
 
 
